@@ -1,17 +1,20 @@
 package com.wesoliver.course.services.impl;
 
+import com.wesoliver.course.services.UtilsService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
-public class UtilsServiceImpl implements com.wesoliver.course.services.UtilsService {
+public class UtilsServiceImpl implements UtilsService {
 
-    String REQUEST_URI = "http://localhost:8087";
+    @Value("${wesoliver.api.url.authuser}")
+    String REQUEST_URI;
 
     @Override
-    public String createUrl(UUID courseId, Pageable pageable){
+    public String createUrlGetAllUsersByCourse(UUID courseId, Pageable pageable){
         return REQUEST_URI + "/users?courseId=" + courseId + "&page=" + pageable.getPageNumber() + "&size=" +
                 pageable.getPageSize() + "&sort=" + pageable.getSort().toString().replaceAll(": ",",");
     }
